@@ -6,7 +6,7 @@ class PlantsController < ApplicationController
   end
 
   def show
-    plant = Plant.find_by(id: params[:id])
+    plant = Plant.find(params[:id])
     if plant
       render json: plant
     else
@@ -15,6 +15,14 @@ class PlantsController < ApplicationController
   end
 
   def create
+    plant = Plant.create(plant_params)
+    render json: plant, status: :created
+  end
+
+  private
+
+  def plant_params
+    params.permit(:name, :image, :price)
   end
 
 end
